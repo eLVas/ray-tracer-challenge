@@ -31,3 +31,28 @@ Feature: Point representation
     Then v = tuple(4, -4, 3, 0)
     And a is not a point
     And a is a vector
+
+  Scenario: Adding vector to point
+    Given p ← point(3, -2, 5)
+    And v ← vector(-2, 3, 1)
+    Then p + v = point(1, 1, 6)
+
+  Scenario: Adding vector to vector
+    Given v ← vector(3, -2, 5)
+    And v2 ← vector(-2, 3, 1)
+    Then v + v2 = vector(1, 1, 6)
+
+  Scenario: Subtracting point from other point
+    Given p ← point(3, 2, 1)
+    And p2 ← point(5, 6, 7)
+    Then p - p2 = vector(-2, -4, -6)
+
+  Scenario: Subtracting a vector from a point
+    Given p ← point(3, 2, 1)
+    And v ← vector(5, 6, 7)
+    Then p - v = point(-2, -4, -6)
+
+  Scenario: Subtracting two vectors
+    Given v ← vector(3, 2, 1)
+    And v2 ← vector(5, 6, 7)
+    Then v - v2 = vector(-2, -4, -6)

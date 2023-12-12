@@ -64,7 +64,9 @@ impl FromStr for Axis {
 pub struct TupleWorld {
     tuple: Tuple4X,
     point: Point,
+    point_other: Point,
     vector: Vector,
+    vector_other: Vector,
 }
 
 #[given(expr = "a ← {tuple4}")]
@@ -77,6 +79,11 @@ fn point(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
     world.point = Point::new(x, y, z);
 }
 
+#[given(expr = "p2 ← point\\({float}, {float}, {float}\\)")]
+fn point_other(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    world.point_other = Point::new(x, y, z);
+}
+
 #[given(expr = "a ← point.tuple")]
 fn point_tuple(world: &mut TupleWorld) {
     world.tuple = world.point.0;
@@ -85,6 +92,11 @@ fn point_tuple(world: &mut TupleWorld) {
 #[given(expr = "v ← vector\\({float}, {float}, {float}\\)")]
 fn vector(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
     world.vector = Vector::new(x, y, z);
+}
+
+#[given(expr = "v2 ← vector\\({float}, {float}, {float}\\)")]
+fn vector_other(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    world.vector_other = Vector::new(x, y, z);
 }
 
 #[given(expr = "a ← vector.tuple")]
@@ -126,6 +138,31 @@ fn point_tuple_val_is(world: &mut TupleWorld, tuple: Tuple4) {
 #[then(expr = "v = {tuple4}")]
 fn vector_tuple_val_is(world: &mut TupleWorld, tuple: Tuple4) {
     assert_eq!(world.vector.0, tuple.0)
+}
+
+#[then(expr = "p + v = point\\({float}, {float}, {float}\\)")]
+fn point_vector_sum_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(world.point + world.vector, Point::new(x, y, z))
+}
+
+#[then(expr = "v + v2 = vector\\({float}, {float}, {float}\\)")]
+fn vector_vector_sum_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(world.vector + world.vector_other, Vector::new(x, y, z))
+}
+
+#[then(expr = "p - p2 = vector\\({float}, {float}, {float}\\)")]
+fn point_point_sub_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(world.point - world.point_other, Vector::new(x, y, z))
+}
+
+#[then(expr = "p - v = point\\({float}, {float}, {float}\\)")]
+fn point_vector_sub_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(world.point - world.vector, Point::new(x, y, z))
+}
+
+#[then(expr = "v - v2 = vector\\({float}, {float}, {float}\\)")]
+fn vector_vector_sub_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(world.vector - world.vector_other, Vector::new(x, y, z))
 }
 
 fn main() {

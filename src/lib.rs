@@ -1,6 +1,8 @@
+use std::ops;
+
 pub type Tuple4X = (f64, f64, f64, f64);
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Point(pub Tuple4X);
 
 impl Point {
@@ -15,7 +17,37 @@ impl Default for Point {
     }
 }
 
-#[derive(Debug)]
+impl ops::Add<Vector> for Point {
+    type Output = Point;
+
+    fn add(self, rhs: Vector) -> Self::Output {
+        let (px, py, pz, _) = self.0;
+        let (vx, vy, vz, _) = rhs.0;
+        Point::new(px+vx, py+vy, pz+vz)
+    }
+}
+
+impl ops::Sub<Point> for Point {
+    type Output = Vector;
+
+    fn sub(self, rhs: Point) -> Self::Output {
+        let (px1, py1, pz1, _) = self.0;
+        let (px2, py2, pz2, _) = rhs.0;
+        Vector::new(px1-px2, py1-py2, pz1-pz2)
+    }
+}
+
+impl ops::Sub<Vector> for Point {
+    type Output = Point;
+
+    fn sub(self, rhs: Vector) -> Self::Output {
+        let (px, py, pz, _) = self.0;
+        let (vx, vy, vz, _) = rhs.0;
+        Point::new(px-vx, py-vy, pz-vz)
+    }
+}
+
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub struct Vector(pub Tuple4X);
 
 impl Vector {
@@ -30,17 +62,22 @@ impl Default for Vector {
     }
 }
 
-pub fn add(left: usize, right: usize) -> usize {
-    left + right
+impl ops::Add<Vector> for Vector {
+    type Output = Vector;
+
+    fn add(self, rhs: Vector) -> Self::Output {
+        let (vx1, vy1, vz1, _) = self.0;
+        let (vx2, vy2, vz2, _) = rhs.0;
+        Vector::new(vx1+vx2, vy1+vy2, vz1+vz2)
+    }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl ops::Sub<Vector> for Vector {
+    type Output = Vector;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    fn sub(self, rhs: Vector) -> Self::Output {
+        let (vx1, vy1, vz1, _) = self.0;
+        let (vx2, vy2, vz2, _) = rhs.0;
+        Vector::new(vx1-vx2, vy1-vy2, vz1-vz2)
     }
 }
