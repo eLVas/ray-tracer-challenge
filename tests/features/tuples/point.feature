@@ -96,6 +96,7 @@ Feature: Point representation
   Scenario: Normalizing vector(1, 2, 3)
     Given v ← vector(1, 2, 3)
     Then normalize(v) = vector(0.26726, 0.53452, 0.80178)
+
   Scenario: The magnitude of a normalized vector
     Given v ← vector(1, 2, 3)
     When v ← normalize(v)
