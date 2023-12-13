@@ -79,6 +79,18 @@ impl Vector {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
         Vector((x, y, z, 0.0))
     }
+
+    pub fn magnitude(&self) -> f64 {
+        let (x, y, z, _) = self.0;
+
+        f64::sqrt(x*x + y*y + z*z)
+    }
+
+    pub fn normalize(&self) -> Self {
+        let m = self.magnitude();
+        let (x,y,z,_) = self.0;
+        Self::new(x/m, y/m, z/m)
+    }
 }
 
 impl ApproxEq for Vector {
