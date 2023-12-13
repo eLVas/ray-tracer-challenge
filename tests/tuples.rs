@@ -193,6 +193,11 @@ fn vector_normal_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
     assert!(world.vector.normalize().approx_eq(&Vector::new(x, y, z)))
 }
 
+#[then(expr = "dot\\(v, v2\\) = {float}")]
+fn vector_dot_product_is(world: &mut TupleWorld, expected: f64) {
+    assert_eq!(world.vector.dot(&world.vector_other), expected)
+}
+
 fn main() {
     futures::executor::block_on(TupleWorld::run("tests/features/tuples"));
 }

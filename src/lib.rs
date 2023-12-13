@@ -91,6 +91,13 @@ impl Vector {
         let (x,y,z,_) = self.0;
         Self::new(x/m, y/m, z/m)
     }
+
+    pub fn dot(&self, rhs: &Self) -> f64 {
+        let (x1, y1, z1, _) = self.0;
+        let (x2, y2, z2, _) = rhs.0;
+
+        x1 * x2 + y1 * y2 + z1 * z2
+    }
 }
 
 impl ApproxEq for Vector {

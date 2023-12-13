@@ -101,3 +101,8 @@ Feature: Point representation
     Given v ← vector(1, 2, 3)
     When v ← normalize(v)
     Then magnitude(v) = 1
+
+  Scenario: The dot product of two tuples
+    Given v ← vector(1, 2, 3)
+    And v2 ← vector(2, 3, 4)
+    Then dot(v, v2) = 20
