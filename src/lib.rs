@@ -103,6 +103,26 @@ impl ops::Add<Vector> for Vector {
     }
 }
 
+impl ops::Mul<f64> for Vector {
+    type Output = Vector;
+
+    fn mul(self, rhs: f64) -> Self::Output {
+        let (x, y, z, _) = self.0;
+
+        Vector::new(x*rhs, y * rhs, z* rhs)
+    }
+}
+
+impl ops::Div<f64> for Vector {
+    type Output = Vector;
+
+    fn div(self, rhs: f64) -> Self::Output {
+        let (x,y,z,_) = self.0;
+
+        Vector::new(x/rhs, y/rhs, z/rhs)
+    }
+}
+
 impl ops::Sub<Vector> for Vector {
     type Output = Vector;
 
