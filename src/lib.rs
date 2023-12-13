@@ -1,9 +1,28 @@
-use std::ops;
-
+use std::{f64, ops};
 pub type Tuple4X = (f64, f64, f64, f64);
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Point(pub Tuple4X);
+
+pub trait ApproxEq {
+    const EPSILON: f64 = 0.00001;
+    fn approx_eq(&self, other: &Self) -> bool;
+}
+
+impl ApproxEq for f64 {
+    fn approx_eq(&self, other: &Self) -> bool {
+        f64::abs(self - other) < <Self as ApproxEq>::EPSILON
+    }
+}
+
+impl ApproxEq for Tuple4X {
+    fn approx_eq(&self, other: &Self) -> bool {
+        let (x, y, z, w) = self;
+        let (x_o, y_o, z_o, w_o) = other;
+
+         x.approx_eq(x_o) && y.approx_eq(y_o) && z.approx_eq(z_o) && w.approx_eq(w_o)
+    }
+}
 
 impl Point {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
@@ -14,6 +33,12 @@ impl Point {
 impl Default for Point {
     fn default() -> Self {
         Point::new(f64::default(), f64::default(), f64::default())
+    }
+}
+
+impl ApproxEq for Point {
+    fn approx_eq(&self, other: &Self) -> bool {
+        self.0.approx_eq(&other.0)
     }
 }
 
@@ -53,6 +78,12 @@ pub struct Vector(pub Tuple4X);
 impl Vector {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
         Vector((x, y, z, 0.0))
+    }
+}
+
+impl ApproxEq for Vector {
+    fn approx_eq(&self, other: &Self) -> bool {
+        self.0.approx_eq(&other.0)
     }
 }
 
