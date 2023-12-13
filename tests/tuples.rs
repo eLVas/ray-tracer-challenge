@@ -1,7 +1,9 @@
 use std::num::ParseFloatError;
 use std::str::FromStr;
 use cucumber::{given, then, when, World, Parameter};
-use ray_tracer_challenge::{ApproxEq, Point, Tuple4X, Vector};
+use ray_tracer_challenge::{Point, Tuple4X, Vector};
+use ray_tracer_challenge::approx_eq::ApproxEq;
+
 
 #[derive(Debug, Default, Parameter)]
 #[param(regex = r"tuple\((.*)\)")]
