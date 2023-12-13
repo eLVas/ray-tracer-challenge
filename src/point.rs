@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::ops;
 use crate::Tuple4X;
 use crate::approx_eq::ApproxEq;
@@ -9,6 +10,14 @@ pub struct Point(pub Tuple4X);
 impl Point {
     pub fn new(x: f64, y: f64, z: f64) -> Self {
         Point((x,y,z,1.0))
+    }
+}
+
+impl Display for Point {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let (x,y,z,_) = self.0;
+
+        write!(f, "•  ({}, {}, {})", x, y, z)
     }
 }
 

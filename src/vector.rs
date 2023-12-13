@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::ops;
 use crate::Tuple4X;
 use crate::approx_eq::ApproxEq;
@@ -41,15 +42,23 @@ impl Vector {
     }
 }
 
-impl ApproxEq for Vector {
-    fn approx_eq(&self, other: &Self) -> bool {
-        self.0.approx_eq(&other.0)
+impl Display for Vector {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let (x,y,z,_) = self.0;
+
+        write!(f, "-> ({}, {}, {})", x, y, z)
     }
 }
 
 impl Default for Vector {
     fn default() -> Self {
         Vector::new(f64::default(), f64::default(), f64::default())
+    }
+}
+
+impl ApproxEq for Vector {
+    fn approx_eq(&self, other: &Self) -> bool {
+        self.0.approx_eq(&other.0)
     }
 }
 
