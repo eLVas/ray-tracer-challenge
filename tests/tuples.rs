@@ -1,7 +1,7 @@
 use std::num::ParseFloatError;
 use std::str::FromStr;
-use cucumber::{given, then, World, Parameter};
-use ray_tracer_challenge::{Point, Tuple4X, Vector};
+use cucumber::{given, then, when, World, Parameter};
+use ray_tracer_challenge::{ApproxEq, Point, Tuple4X, Vector};
 
 #[derive(Debug, Default, Parameter)]
 #[param(regex = r"tuple\((.*)\)")]
@@ -104,6 +104,9 @@ fn vector_tuple(world: &mut TupleWorld) {
     world.tuple = world.vector.0;
 }
 
+#[when("v ← normalize(v)")]
+fn normalize_v(world: &mut TupleWorld) { world.vector = world.vector.normalize()}
+
 #[then(expr = "a.{axis} = {float}")]
 fn axis_value(world: &mut TupleWorld, axis: Axis, val: f64) {
     match axis {
@@ -146,7 +149,7 @@ fn point_vector_sum_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
 }
 
 #[then(expr = "v + v2 = vector\\({float}, {float}, {float}\\)")]
-fn vector_vector_sum_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+fn vector_vector_sm_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
     assert_eq!(world.vector + world.vector_other, Vector::new(x, y, z))
 }
 
@@ -163,6 +166,31 @@ fn point_vector_sub_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
 #[then(expr = "v - v2 = vector\\({float}, {float}, {float}\\)")]
 fn vector_vector_sub_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
     assert_eq!(world.vector - world.vector_other, Vector::new(x, y, z))
+}
+
+#[then(expr = "v * {float} = vector\\({float}, {float}, {float}\\)")]
+fn vector_scalar_mul_is(world: &mut TupleWorld, k: f64, x: f64, y: f64, z: f64) {
+    assert_eq!(world.vector * k, Vector::new(x, y, z))
+}
+
+#[then(expr = "v \\/ {float} = vector\\({float}, {float}, {float}\\)")]
+fn vector_scalar_div_is(world: &mut TupleWorld, k: f64, x: f64, y: f64, z: f64) {
+    assert_eq!(world.vector / k, Vector::new(x, y, z))
+}
+
+#[then(expr = "magnitude\\(v\\) = {float}")]
+fn vector_magnitude_is_one(world: &mut TupleWorld, m: f64) {
+    assert_eq!(world.vector.magnitude(), m)
+}
+
+#[then(expr = "magnitude\\(v\\) = √{float}")]
+fn vector_magnitude_is_sqrt_14(world: &mut TupleWorld, m_sq: f64) {
+    assert_eq!(world.vector.magnitude(), f64::sqrt(m_sq))
+}
+
+#[then(expr = "normalize\\(v\\) = vector\\({float}, {float}, {float}\\)")]
+fn vector_normal_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert!(world.vector.normalize().approx_eq(&Vector::new(x, y, z)))
 }
 
 fn main() {

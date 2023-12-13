@@ -56,3 +56,47 @@ Feature: Point representation
     Given v ← vector(3, 2, 1)
     And v2 ← vector(5, 6, 7)
     Then v - v2 = vector(-2, -4, -6)
+
+  Scenario: Multiplying a vector by a scalar
+    Given v ← vector(1, -2, 3)
+    Then v * 3.5 = vector(3.5, -7, 10.5)
+
+  Scenario: Multiplying a vector by a fraction
+    Given v ← vector(1, -2, 3)
+    Then v * 0.5 = vector(0.5, -1, 1.5)
+
+  Scenario: Dividing a vector by a scalar
+    Given v ← vector(1, -2, 3)
+    Then v / 2 = vector(0.5, -1, 1.5)
+
+  Scenario: Computing the magnitude of vector(1, 0, 0)
+    Given v ← vector(1, 0, 0)
+    Then magnitude(v) = 1
+
+  Scenario: Computing the magnitude of vector(0, 1, 0)
+    Given v ← vector(0, 1, 0)
+    Then magnitude(v) = 1
+
+  Scenario: Computing the magnitude of vector(0, 0, 1)
+    Given v ← vector(0, 0, 1)
+    Then magnitude(v) = 1
+
+  Scenario: Computing the magnitude of vector(1, 2, 3)
+    Given v ← vector(1, 2, 3)
+    Then magnitude(v) = √14
+
+  Scenario: Computing the magnitude of vector(-1, -2, -3)
+    Given v ← vector(-1, -2, -3)
+    Then magnitude(v) = √14
+
+  Scenario: Normalizing vector(4, 0, 0) gives (1, 0, 0)
+    Given v ← vector(4, 0, 0)
+    Then normalize(v) = vector(1, 0, 0)
+
+  Scenario: Normalizing vector(1, 2, 3)
+    Given v ← vector(1, 2, 3)
+    Then normalize(v) = vector(0.26726, 0.53452, 0.80178)
+  Scenario: The magnitude of a normalized vector
+    Given v ← vector(1, 2, 3)
+    When v ← normalize(v)
+    Then magnitude(v) = 1
