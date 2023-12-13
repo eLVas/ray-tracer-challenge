@@ -56,9 +56,9 @@ impl ops::Sub<Point> for Point {
     type Output = Vector;
 
     fn sub(self, rhs: Point) -> Self::Output {
-        let (px1, py1, pz1, _) = self.0;
-        let (px2, py2, pz2, _) = rhs.0;
-        Vector::new(px1-px2, py1-py2, pz1-pz2)
+        let (x1, y1, z1, _) = self.0;
+        let (x2, y2, z2, _) = rhs.0;
+        Vector::new(x1-x2, y1-y2, z1-z2)
     }
 }
 
@@ -116,9 +116,9 @@ impl ops::Add<Vector> for Vector {
     type Output = Vector;
 
     fn add(self, rhs: Vector) -> Self::Output {
-        let (vx1, vy1, vz1, _) = self.0;
-        let (vx2, vy2, vz2, _) = rhs.0;
-        Vector::new(vx1+vx2, vy1+vy2, vz1+vz2)
+        let (x1, y1, z1, _) = self.0;
+        let (x2, y2, z2, _) = rhs.0;
+        Vector::new(x1+x2, y1+y2, z1+z2)
     }
 }
 
@@ -146,8 +146,8 @@ impl ops::Sub<Vector> for Vector {
     type Output = Vector;
 
     fn sub(self, rhs: Vector) -> Self::Output {
-        let (vx1, vy1, vz1, _) = self.0;
-        let (vx2, vy2, vz2, _) = rhs.0;
-        Vector::new(vx1-vx2, vy1-vy2, vz1-vz2)
+        let (x1, y1, z1, _) = self.0;
+        let (x2, y2, z2, _) = rhs.0;
+        Vector::new(x1-x2, y1-y2, z1-z2)
     }
 }
