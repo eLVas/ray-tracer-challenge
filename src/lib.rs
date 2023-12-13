@@ -98,6 +98,17 @@ impl Vector {
 
         x1 * x2 + y1 * y2 + z1 * z2
     }
+
+    pub fn cross(&self, rhs: &Self) -> Self {
+        let (x1, y1, z1, _) = self.0;
+        let (x2, y2, z2, _) = rhs.0;
+
+        Vector::new(
+            y1*z2 - z1*y2,
+            z1*x2 - x1*z2,
+            x1*y2 - y1*x2
+        )
+    }
 }
 
 impl ApproxEq for Vector {

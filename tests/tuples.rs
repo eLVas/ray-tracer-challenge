@@ -198,6 +198,18 @@ fn vector_dot_product_is(world: &mut TupleWorld, expected: f64) {
     assert_eq!(world.vector.dot(&world.vector_other), expected)
 }
 
+#[then(expr = "cross\\(v, v2\\) = vector\\({float}, {float}, {float}\\)")]
+fn vector_cross_product_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(world.vector.cross(&world.vector_other), Vector::new(x,y,z))
+}
+
+#[then(expr = "cross\\(v2, v\\) = vector\\({float}, {float}, {float}\\)")]
+fn vector_cross_product_reversed_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(world.vector_other.cross(&world.vector), Vector::new(x,y,z))
+}
+
+
+
 fn main() {
     futures::executor::block_on(TupleWorld::run("tests/features/tuples"));
 }

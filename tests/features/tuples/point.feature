@@ -106,3 +106,9 @@ Feature: Point representation
     Given v ← vector(1, 2, 3)
     And v2 ← vector(2, 3, 4)
     Then dot(v, v2) = 20
+
+  Scenario: The cross product of two vectors
+    Given v ← vector(1, 2, 3)
+    And v2 ← vector(2, 3, 4)
+    Then cross(v, v2) = vector(-1, 2, -1)
+    And cross(v2, v) = vector(1, -2, 1)
