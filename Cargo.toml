@@ -12,5 +12,5 @@ cucumber = "0.20"
 futures = "0.3"
 
 [[test]]
-name = "tuples"
+name = "data_structures"
 harness = false

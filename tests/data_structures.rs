@@ -213,5 +213,5 @@ fn vector_cross_product_reversed_is(world: &mut TupleWorld, x: f64, y: f64, z: f
 
 
 fn main() {
-    futures::executor::block_on(TupleWorld::run("tests/features/tuples"));
+    futures::executor::block_on(TupleWorld::run("tests/features/data_structures"));
 }

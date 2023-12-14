@@ -18,7 +18,7 @@ fn tick(env: &Environment, projectile: &mut Projectile) {
 fn main() {
     let mut p = Projectile{
         position: Point::new(0.0, 1.0, 0.0),
-        velocity: Vector::new(1.0, 1.0, 0.0),
+        velocity: Vector::new(10.0, 15.0, 0.0),
     };
     let e = Environment{
         gravity: Vector::new(0.0, -0.1, 0.0),
