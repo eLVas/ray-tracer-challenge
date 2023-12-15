@@ -26,6 +26,10 @@ Feature: Vector data structure
     And v2 ← vector(5, 6, 7)
     Then v - v2 = vector(-2, -4, -6)
 
+  Scenario: Negating a tuple
+    Given v ← vector(1, -2, 3)
+    Then -v = vector(-1, 2, -3)
+
   Scenario: Multiplying a vector by a scalar
     Given v ← vector(1, -2, 3)
     Then v * 3.5 = vector(3.5, -7, 10.5)

@@ -62,7 +62,7 @@ impl ApproxEq for Vector {
     }
 }
 
-impl ops::Add<Vector> for Vector {
+impl ops::Add for Vector {
     type Output = Vector;
 
     fn add(self, rhs: Vector) -> Self::Output {
@@ -92,12 +92,22 @@ impl ops::Div<f64> for Vector {
     }
 }
 
-impl ops::Sub<Vector> for Vector {
+impl ops::Sub for Vector {
     type Output = Vector;
 
     fn sub(self, rhs: Vector) -> Self::Output {
         let (x1, y1, z1, _) = self.0;
         let (x2, y2, z2, _) = rhs.0;
         Vector::new(x1-x2, y1-y2, z1-z2)
+    }
+}
+
+impl ops::Neg for Vector {
+    type Output = Vector;
+
+    fn neg(self) -> Self::Output {
+        let (x, y, z, _) = self.0;
+
+        Vector::new(-x, -y, -z)
     }
 }

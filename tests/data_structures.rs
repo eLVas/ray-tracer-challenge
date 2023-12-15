@@ -151,7 +151,7 @@ fn point_vector_sum_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
 }
 
 #[then(expr = "v + v2 = vector\\({float}, {float}, {float}\\)")]
-fn vector_vector_sm_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+fn vector_vector_sum_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
     assert_eq!(world.vector + world.vector_other, Vector::new(x, y, z))
 }
 
@@ -168,6 +168,11 @@ fn point_vector_sub_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
 #[then(expr = "v - v2 = vector\\({float}, {float}, {float}\\)")]
 fn vector_vector_sub_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
     assert_eq!(world.vector - world.vector_other, Vector::new(x, y, z))
+}
+
+#[then(expr = "-v = vector\\({float}, {float}, {float}\\)")]
+fn vector_neg_is(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
+    assert_eq!(-world.vector, Vector::new(x, y, z))
 }
 
 #[then(expr = "v * {float} = vector\\({float}, {float}, {float}\\)")]
