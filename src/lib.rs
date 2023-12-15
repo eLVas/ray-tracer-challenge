@@ -1,9 +1,12 @@
 mod point;
 mod vector;
 pub mod approx_eq;
+mod color;
 
 pub use point::Point;
 pub use vector::Vector;
+pub use color::Color;
+use crate::approx_eq::ApproxEq;
 
 pub type Tuple4X = (f64, f64, f64, f64);
 

@@ -1,7 +1,7 @@
 use std::num::ParseFloatError;
 use std::str::FromStr;
 use cucumber::{given, then, when, World, Parameter};
-use ray_tracer_challenge::{Point, Tuple4X, Vector};
+use ray_tracer_challenge::{Color, Point, Tuple4X, Vector};
 use ray_tracer_challenge::approx_eq::ApproxEq;
 
 
@@ -104,6 +104,16 @@ fn vector_other(world: &mut TupleWorld, x: f64, y: f64, z: f64) {
 #[given(expr = "a ← vector.tuple")]
 fn vector_tuple(world: &mut TupleWorld) {
     world.tuple = world.vector.0;
+}
+
+#[given(expr = "c ← color\\({float}, {float}, {float}\\)")]
+fn color(world: &mut TupleWorld, r: f64, g: f64, b: f64) {
+    world.color = Color::new(r, g, b);
+}
+
+#[given(expr = "c2 ← color\\({float}, {float}, {float}\\)")]
+fn color_other(world: &mut TupleWorld, r: f64, g: f64, b: f64) {
+    world.color_other = Color::new(r, g, b);
 }
 
 #[when("v ← normalize(v)")]
@@ -215,7 +225,40 @@ fn vector_cross_product_reversed_is(world: &mut TupleWorld, x: f64, y: f64, z: f
     assert_eq!(world.vector_other.cross(&world.vector), Vector::new(x,y,z))
 }
 
+#[then(expr = "c.red = {float}")]
+fn color_red_component_is(world: &mut TupleWorld, expected: f64) {
+    assert_eq!(world.color.0.0, expected)
+}
 
+#[then(expr = "c.green = {float}")]
+fn color_green_component_is(world: &mut TupleWorld, expected: f64) {
+    assert_eq!(world.color.0.1, expected)
+}
+
+#[then(expr = "c.blue = {float}")]
+fn color_blue_component_is(world: &mut TupleWorld, expected: f64) {
+    assert_eq!(world.color.0.2, expected)
+}
+
+#[then(expr = "c + c2 = color\\({float}, {float}, {float}\\)")]
+fn color_color_sum_is(world: &mut TupleWorld, r: f64, g: f64, b: f64) {
+    assert_eq!(world.color + world.color_other, Color::new(r,g,b))
+}
+
+#[then(expr = "c - c2 = color\\({float}, {float}, {float}\\)")]
+fn color_color_sub_is(world: &mut TupleWorld, r: f64, g: f64, b: f64) {
+    assert!((world.color - world.color_other).approx_eq(&Color::new(r,g,b)))
+}
+
+#[then(expr = "c * {float} = color\\({float}, {float}, {float}\\)")]
+fn color_scalar_mul_is(world: &mut TupleWorld, k: f64, r: f64, g: f64, b: f64) {
+    assert_eq!(world.color * k, Color::new(r,g,b))
+}
+
+#[then(expr = "c * c2 = color\\({float}, {float}, {float}\\)")]
+fn color_color_mul_is(world: &mut TupleWorld, r: f64, g: f64, b: f64) {
+    assert!((world.color * world.color_other).approx_eq(&Color::new(r,g,b)))
+}
 
 fn main() {
     futures::executor::block_on(TupleWorld::run("tests/features/data_structures"));
