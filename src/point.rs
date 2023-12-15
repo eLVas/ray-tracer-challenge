@@ -43,7 +43,7 @@ impl ops::Add<Vector> for Point {
     }
 }
 
-impl ops::Sub<Point> for Point {
+impl ops::Sub for Point {
     type Output = Vector;
 
     fn sub(self, rhs: Point) -> Self::Output {
